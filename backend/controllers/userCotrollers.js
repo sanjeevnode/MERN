@@ -107,10 +107,21 @@ const updateUserProfile = expressAsyncHandler(async (req,res)=>{
     }
 });
 
+
+//@description Get all users
+//route get/api/users/allusers
+//@access  public
+const getUsers = expressAsyncHandler(async (req,res)=>{
+    const user = await User.find({},"name email");
+    res.status(200).json(user)
+});
+
+
 export{
     authUser,
     registerUser,
     logoutUser,
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    getUsers
 };
