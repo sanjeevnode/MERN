@@ -4,7 +4,7 @@ import './App.css'
 const App = () => {
   const [data ,setData] = useState([]);
   const getdata = async ()=>{
-      const res = await fetch(`http://localhost:5000/api/users/allusers`);
+      const res = await fetch(`https://mern-api-ua94.onrender.com/api/users/allusers`);
       const users =  await res.json();
       setData(users);
       
