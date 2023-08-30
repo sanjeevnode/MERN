@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import './App.css'
 const App = () => {
   const [data ,setData] = useState([]);
@@ -6,10 +7,12 @@ const App = () => {
       const res = await fetch(`http://localhost:5000/api/users/allusers`);
       const users =  await res.json();
       setData(users);
+      
     }
   useEffect(()=>{
     getdata();
   },[])
+  console.log(process.env.BASE_URL);
   return (
     <div className='App'>
 
