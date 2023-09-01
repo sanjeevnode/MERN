@@ -3,6 +3,7 @@ import { USERDATA } from '../App';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify'
 import { FaUserEdit } from 'react-icons/fa'
+import ReactLoading from 'react-loading'
 
 const Dashboard = () => {
   const { currentToken, setCurrentUser, currentUser } = useContext(USERDATA);
@@ -10,8 +11,11 @@ const Dashboard = () => {
   const { register, handleSubmit } = useForm();
   const [showpassword, setShowPassword] = useState(false);
   const [inputDisabled, setInputDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const updateUser = async (data) => {
+    setIsLoading(false)
     const res = await fetch(`http://localhost:5000/api/users/profile`, {
       method: "PUT",
       body: JSON.stringify(data),
@@ -28,6 +32,7 @@ const Dashboard = () => {
       const res = await updateUser(data);
       const user = await res.json();
       setCurrentUser(user);
+    setIsLoading(true)
       toast.success("Update Successfull", {
         autoClose: 2000
       });
@@ -43,6 +48,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const getUser = async () => {
+    setIsLoading(false)
+
       const res = await fetch(`http://localhost:5000/api/users/profile`, {
         method: "GET",
         headers: {
@@ -51,6 +58,8 @@ const Dashboard = () => {
         }
       });
       const data = await res.json();
+    setIsLoading(true)
+
       setCurrentUser(data);
     }
     if (currentToken !== "") {
@@ -62,6 +71,11 @@ const Dashboard = () => {
     <div className='w-full h-screen'>
 
       <div className='max-w-[900px] mx-auto px-4 flex flex-col justify-center  h-full items-center'>
+
+      <div hidden={isLoading} className='absolute z-10'>
+                    <ReactLoading type='spinningBubbles' color='pink' height={150} width={150} />
+
+                </div>
 
         <form onSubmit={handleSubmit(formSubmit)} action="" className='flex flex-col justify-center  py-4 px-6 border border-gray-400 w-[70%]'>
           <div className='flex justify-between items-center'>

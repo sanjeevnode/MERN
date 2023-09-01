@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading'
 
 
 const Register = () => {
     const [showpassword, setShowPassword] = useState(false);
     const { register, handleSubmit } = useForm();
+    const [isLoading, setIsLoading] = useState(true);
 
-    const  registerUser = async(data)=>{
-      const res =  await fetch(`http://localhost:5000/api/users/register`,{
-            method:"POST",
-            body:JSON.stringify(data),
-            headers:{
+    const registerUser = async (data) => {
+        setIsLoading(false);
+        const res = await fetch(`https://mern-auth-q5jz.onrender.com/api/users/register`, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
                 "Content-Type": "application/json",
             }
         });
@@ -19,24 +22,25 @@ const Register = () => {
     }
 
     const formSubmit = async (data, e) => {
-        if(data.password===data.confirmpassword){
-           const res = await registerUser({
-                name:data.name,
-                email:data.email,
-                password:data.password
+        if (data.password === data.confirmpassword) {
+            const res = await registerUser({
+                name: data.name,
+                email: data.email,
+                password: data.password
             });
-            const d =  await res.json()
-            if(res.ok){
+            const d = await res.json()
+            if (res.ok) {
+                setIsLoading(true);
                 e.target.reset();
-                toast.success("User Created Successfully",{
-                    autoClose:3000
+                toast.success("User Created Successfully", {
+                    autoClose: 3000
                 })
-            }else{
-                toast.error(d,{
-                    autoClose:3000
+            } else {
+                toast.error(d, {
+                    autoClose: 3000
                 })
             }
-        }else{
+        } else {
             alert('wrong credentials')
         }
     }
@@ -44,6 +48,11 @@ const Register = () => {
         <div className='w-full h-screen'>
 
             <div className='max-w-[900px] mx-auto px-4 flex flex-col justify-center  h-full items-center'>
+
+                <div hidden={isLoading} className='absolute z-10'>
+                    <ReactLoading type='spinningBubbles' color='pink' height={150} width={150} />
+
+                </div>
 
                 <form onSubmit={handleSubmit(formSubmit)} action="" className='flex flex-col justify-center  py-4 px-6 border border-gray-400 w-[70%]'>
                     <div>

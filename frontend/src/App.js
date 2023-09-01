@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard'
 import { createContext, useEffect, useState } from 'react'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Error from './components/Error'
 
 const USERDATA = createContext();
 
@@ -19,7 +20,7 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
 
   const getUser = async () => {
-    const res = await fetch(`http://localhost:5000/api/users/profile`, {
+    const res = await fetch(`https://mern-auth-q5jz.onrender.com/api/users/profile`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${currentToken}`,
@@ -43,6 +44,7 @@ const App = () => {
         <Header />
         <ToastContainer/>
         <Routes>
+        <Route path='*' element={<Error/>}/>
           <Route path='/' element={currentToken ? <Dashboard /> : <Navigate to='/login' />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
