@@ -36,12 +36,16 @@ const Register = () => {
                     autoClose: 3000
                 })
             } else {
+                setIsLoading(true);
                 toast.error(d, {
                     autoClose: 3000
                 })
             }
         } else {
-            alert('wrong credentials')
+            setIsLoading(true);
+                toast.error("Wrong credentials", {
+                    autoClose: 3000
+                })
         }
     }
     return (

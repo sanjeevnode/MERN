@@ -43,6 +43,8 @@ const Login = () => {
             }
             else{
                 const error = await res.json();
+        setIsLoading(true)
+
                 toast.error(error.message,{
                     autoClose:2000
                 });

@@ -43,6 +43,7 @@ const Dashboard = () => {
     toast.error("Invalid form data",{
       autoClose:3000
     });
+    setIsLoading(true)
    }
   }
 
@@ -65,6 +66,7 @@ const Dashboard = () => {
     if (currentToken !== "") {
       getUser();
     }
+    setIsLoading(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentToken])
   return (
