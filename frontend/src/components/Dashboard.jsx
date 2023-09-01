@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   const updateUser = async (data) => {
     setIsLoading(false)
-    const res = await fetch(`http://localhost:5000/api/users/profile`, {
+    const res = await fetch(`https://mern-auth-q5jz.onrender.com/api/users/profile`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
@@ -51,7 +51,7 @@ const Dashboard = () => {
     const getUser = async () => {
     setIsLoading(false)
 
-      const res = await fetch(`http://localhost:5000/api/users/profile`, {
+      const res = await fetch(`https://mern-auth-q5jz.onrender.com/api/users/profile`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${currentToken}`,
